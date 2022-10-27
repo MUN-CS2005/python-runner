@@ -7,6 +7,8 @@ from subprocess import PIPE, STDOUT, run
 hostName = "localhost"
 serverPort = 8080
 
+Change = 1
+
 class QuizRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
