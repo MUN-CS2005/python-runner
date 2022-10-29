@@ -19,14 +19,6 @@
     {% else %}
         <h1>Hello, World!</h1>
     {% endif %}
-    <!-- for key in keyword dictionary -->
-    {% for key in attributes %}
-        <h2>{{attributes.get(key)}}</h2>
-    {% endfor %}
-    <!-- for value in keyword dictionary -->
-    {% for item in attributes.keys() %}
-        <h2>{{item}}</h2>
-    {% endfor %}
     <!-- for single keyword to be replaced with its value -->
     <h2>This is Content_2:  {{content2}}</h2>
     <h2>This is Content_3:  {{content3}}</h2>

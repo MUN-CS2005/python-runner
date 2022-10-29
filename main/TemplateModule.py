@@ -17,31 +17,20 @@ class Template:
     This module is not yet completed, everything depends on how the project goes.
     
     :param app:receives the Flask() app object, currently necessary.
-    :param page: receives a HTML page for template.
-    :param title: receives a string to template {{title}} keyword.
+    :param page: receives an HTML page for template.
+    :param url: receives a string as an url.
     :param **placeholder: receives a dictionary of keyword for templating. {key: value}.
     """
 
-    def __init__(self, app, page="index.html", title=None, **placeholder):
+    def __init__(self, app, page="index.html", url="/", **placeholder):
         self._placeholder = placeholder
         self._app = app
         self._page = page
-        self.__render(title)
-        self.__run()
+        self.__render(url)
 
-    def __render(self, title):
+    def __render(self, url):
         """This function will be called by the constructor"""
-        @self._app.route('/')
-        @self._app.route('/<ch>')
-        def page(ch=title):
-            attributes = {
-                'title': ch,
-                'attributes': self._placeholder
-            }
-            return render_template(self._page, **attributes, **self._placeholder)
-        return
-
-    def __run(self):
-        """This function will be called by the constructor"""
-        self._app.run()
+        @self._app.route(url)
+        def page():
+            return render_template(self._page, **self._placeholder)
         return
