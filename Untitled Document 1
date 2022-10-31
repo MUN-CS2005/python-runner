@@ -1,0 +1,4 @@
+Ceasar is a test giver at pretty big university. Some of the tests are taken at a computer lab and in order to accomodate every student Ceasar has to seat every student side by side. To prevent cheating Ceasar wants a way to show the questions of the test in a different order for each student, preventing students to easily cheat.
+
+
+Nivek is a teacher at a school in a small town. The Computer Science program at the school does not have a lot of students yet, so Nivek thought he could use his free time to go over the code that every student inputs into the "codeServer" console so he can see what each student is strugling with. Nivek wants a way for the server to log every python input for each student; This would help him to better understand what his students need from him.
