@@ -1,9 +1,9 @@
 import unittest
-from TemplateModule import *
+import main.TemplateModule as TemplateModule
 from flask import Flask
 
 
-class MyTestCase(unittest.TestCase):
+class TestTemplateModule(unittest.TestCase):
     """
     Unit test for TemplateModule.py
     """
@@ -25,7 +25,7 @@ class MyTestCase(unittest.TestCase):
         self.url = "/"
 
         # instantiation of Template class, with given flask app, html page, and keywords to be templated.
-        self.tp = Template(self.app, "TemplateModule.html", self.url, **self.placeholder)
+        self.tp = TemplateModule.Template(self.app, "TemplateModule.html", self.url, **self.placeholder)
 
         # run the flask web app
         self.app.run()
