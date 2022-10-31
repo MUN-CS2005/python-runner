@@ -3,5 +3,11 @@ from setuptools import setup, find_packages
 setup(
     name='codeServer',
     version='0.1.0',
-    packages=find_packages(include=['exampleproject', 'exampleproject.*'])
+    description='A small coding based web application',
+    author='Team C',
+    packages=find_packages(include=['main', 'main.*']),
+    install_requires=["shelve"],
+
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest']
 )
