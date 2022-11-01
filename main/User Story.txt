@@ -1,0 +1,1 @@
+By Ruixiao Lu - As a quiz marker, I think a timing system is needed, because I may need to know if a student exceeded quiz time limit and how late the student submitted the quiz to mark.
