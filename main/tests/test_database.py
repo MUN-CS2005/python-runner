@@ -1,6 +1,6 @@
 """Tests for the project"""
 import unittest
-from .user import User
+from main.database.user import User
 
 
 class TestDatabase(unittest.TestCase):
