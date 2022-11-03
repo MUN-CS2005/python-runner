@@ -6,7 +6,7 @@ setup(
     description='A small coding based web application',
     author='Team C',
     packages=find_packages(include=['main', 'main.*']),
-    install_requires=["sqlite3", "flask"],
+    install_requires=["flask"],
     package_data={
         '': ['*.txt', '*.pdf']},
 
