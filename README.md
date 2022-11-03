@@ -26,5 +26,5 @@ python -m unittest discover
 to run unit tests:
     unit tests are located within the tests folder and can be used by 
 ```
-$ python3 -m unittest discover moleflask.tests
+$ python3 -m unittest discover tests
 ```
