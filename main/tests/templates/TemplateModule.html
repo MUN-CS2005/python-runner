@@ -1,0 +1,26 @@
+<!--Sample template html page-->
+<!-- This sample html page is used for unit test-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- keyword to be replaced: title -->
+    <!-- if keyword != None -->
+    {% if title %}
+        <title>Hello, {{title}}!!</title>
+    {% else %}
+        <!-- if the keyword is None -->
+        <title>Hello, World!</title>
+    {% endif %}
+</head>
+<body>
+    {% if title %}
+        <h1>Hello, {{title}}!!</h1>
+    {% else %}
+        <h1>Hello, World!</h1>
+    {% endif %}
+    <!-- for single keyword to be replaced with its value -->
+    <h2>This is Content_2:  {{content2}}</h2>
+    <h2>This is Content_3:  {{content3}}</h2>
+</body>
+</html>
