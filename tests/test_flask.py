@@ -2,22 +2,24 @@
 
 import unittest
 import requests
-from main.flaskServer import *
+import os
+from main import flaskServer
 
 class TestFlask(unittest.TestCase):
     """
         Unit test for flaskServer.py
     """
-    def testResponse(self):
-        flaskServer()
-        x = requests.get("http://127.0.0.1:5000/run_code")
-        print(x.text)
+    def setUp(self):
+        flaskServer.app.testing = True
+        self.app = flaskServer.app.test_client()
 
-    def testData(self):
-        url = 'http://127.0.0.1:5000/'
-        code = "print('1+1')"
-        x = requests.post(url, data=code)
-        print(x.text)
+    def testResponse(self):
+        rv = self.app.post('/run_code', data=dict(
+           codestuff='print(1)',
+       ), follow_redirects=True)
+        assert b'print(1)' in rv.data
+        assert b'1' in rv.data
+
 
 if __name__=="__main__":
-        unittest.main()
+    unittest.main()
