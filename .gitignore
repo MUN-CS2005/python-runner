@@ -1,0 +1,5 @@
+.idea
+codeServer.egg-info
+.eggs
+__pycache__
+.open
