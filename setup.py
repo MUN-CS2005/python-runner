@@ -9,6 +9,4 @@ setup(
     install_requires=['Flask', 'requests'],
     package_data={
         '': ['*.txt', '*.pdf']},
-
-
 )
