@@ -30,6 +30,7 @@ class TestTemplateModule(unittest.TestCase):
         # run the flask web app
         self.app.run()
 
+    @unittest.skip
     def test_something(self):
         # Running on http://127.0.0.1:5000 as default for a flask app.
         # It will keep running the server until you terminate it manually.
