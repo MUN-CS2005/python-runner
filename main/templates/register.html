@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page to allow users to create their accounts on the server">
+    <meta name="keywords" content="New-Account, Registration">
+    <meta name="author" content="Kevin Tanaka">
+    <title>Registration</title>
+
+    <style>
+        body {background-image: url("bg.jpg");
+            font-family: Arial, Helvetica, sans-serif;
+            height: 100vh;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;}
+        h1 {color: #20c997;}
+        .home {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+        .form-container {
+            letter-spacing: 0.05rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 35vh;
+            text-align: center;
+            width: 100%;
+            background-color: #3d4145;
+            border-radius: 16px;
+            padding: 1.4rem;
+            box-shadow: 10px 10px 22px 1px rgba(0,0,0,0.65);
+        }
+        form label {
+            font-size: 1.2rem;
+            color: #dee2e6;
+        }
+        form input {
+            margin-bottom: 1rem;
+        }
+        .form-container button {
+            padding: 0.2rem 0.6rem;
+            font-size: 1.2rem;
+            border-radius: 16px;
+            border-color: rgba(0, 0, 0, 0);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .form-container button:hover {
+            transition: all 0.2s;
+            background-color: rgb(171, 171, 171);
+            padding: 0.2rem 1rem;
+        }
+        a {
+            font-size: 0.8rem;
+            color: #708fab;
+        }
+
+
+    </style>
+</head>
+<body>
+    <section class="home">
+        <h1>Register new account!</h1>
+        <div class="form-container">
+            <form action="#" method="post">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username"><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password"><br>
+                <label for="check">Repeat Password:</label><br>
+                <input type="password" id="check" name="check"><br>
+                <br><br>
+                <button type="submit">Create Account</button>
+            </form>
+
+        </div>
+    </section>
+</body>
+</html>
