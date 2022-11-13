@@ -29,12 +29,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 35vh;
             text-align: center;
-            width: 100%;
             background-color: #3d4145;
             border-radius: 16px;
-            padding: 1.4rem;
+            padding: 1.4rem 2.8rem;
             box-shadow: 10px 10px 22px 1px rgba(0,0,0,0.65);
         }
         form label {
@@ -54,14 +52,16 @@
         }
         .form-container button:hover {
             transition: all 0.2s;
-            background-color: rgb(171, 171, 171);
+            background-color: #158c68;
             padding: 0.2rem 1rem;
         }
         a {
             font-size: 0.8rem;
             color: #708fab;
         }
-
+        p {font-size: 1.2rem;
+            color: white;
+        }
 
     </style>
 </head>
@@ -77,6 +77,15 @@
                 <label for="check">Repeat Password:</label><br>
                 <input type="password" id="check" name="check"><br>
                 <br><br>
+                {% block content %}
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                {% endblock %}
                 <button type="submit">Create Account</button>
             </form>
 

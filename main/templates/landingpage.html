@@ -29,12 +29,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 30vh;
             text-align: center;
-            width: 100%;
             background-color: #3d4145;
             border-radius: 16px;
-            padding: 1.4rem;
+            padding: 1.4rem 2.8rem;
             box-shadow: 10px 10px 22px 1px rgba(0,0,0,0.65);
         }
         form label {
@@ -61,7 +59,9 @@
             font-size: 0.8rem;
             color: #708fab;
         }
-
+        p {font-size: 1.2rem;
+            color: white;
+        }
 
     </style>
 </head>
@@ -69,7 +69,7 @@
     <section class="home">
         <h1>Welcome to the Server!</h1>
         <div class="form-container">
-            <form action="#" method="post">
+            <form action="" method="POST">
                 <label for="username">Username:</label><br>
                 <input type="text" id="username" name="username"><br>
                 <label for="password">Password:</label><br>
@@ -78,6 +78,15 @@
                 <a href="changepw">Change Password</a>
 
                 <br><br>
+                {% block content %}
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                {% endblock %}
                 <button type="submit">Log me in!</button>
             </form>
 
