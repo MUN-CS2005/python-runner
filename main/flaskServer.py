@@ -15,7 +15,6 @@ from subprocess import PIPE, STDOUT, run
 from database.user import User
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
 app.secret_key = "testing"
 
 
