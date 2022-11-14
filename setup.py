@@ -6,7 +6,7 @@ setup(
     description='A small coding based web application',
     author='Team C',
     packages=find_packages(include=['main', 'main.*']),
-    install_requires=['Flask', 'requests'],
+    install_requires=['Flask', 'requests', 'flask_wtf', 'wtforms'],
     package_data={
         '': ['*.txt', '*.pdf']},
 )
