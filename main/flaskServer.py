@@ -11,7 +11,6 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
-from flask_bcrypt import Bcrypt
 from subprocess import PIPE, STDOUT, run
 from database.user import User
 
@@ -70,7 +69,6 @@ def registration():
     form = regform()
 
     if form.validate_on_submit():
-        hash = bcrypt.generate_password_hash(form.password.data)
         #User.create(username=form.username.data, password=hash)
         return render_template("landingpage.html", form=form)
     return render_template("register.html", form=form)
