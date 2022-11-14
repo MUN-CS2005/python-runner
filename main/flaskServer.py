@@ -59,7 +59,6 @@ def home():
 
 
 @app.route("/<usr>", methods=['POST', "GET"])
-
 def index(usr):
     test = render_template("index.html").replace("<!-- OUTPUT PLACEHOLDERNAMEOFTHEACCOUNTUSER -->", usr)
     return test
@@ -82,6 +81,15 @@ def updatepw():
         pass
     return render_template("changepw.html", form=form)
 
+
+@app.route("/run_code", methods=['POST'])
+def runcode():
+    """Routing the "/run_code" page"""
+    code = request.form['codestuff']
+    test = render_template("index.html").replace('ENTER CODE HERE', code)
+    p = run("python", stdout=PIPE, shell=True, stderr=STDOUT, input=code, encoding='ascii')
+    output = p.stdout
+    return test.replace('<!-- OUTPUT PLACEHOLDER -->', output)
 
 if __name__ == "__main__":
     app.run(debug=True)
