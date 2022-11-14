@@ -69,6 +69,18 @@ class User:
         return cls(*result)
 
     @classmethod
+    def has_user(cls, username: str) -> bool:
+        """
+        Checks if user with username in database, returns bool
+        """
+        cur = cls.con.cursor()
+        result = cur.execute("SELECT * from user WHERE username = ?;", (username,)).fetchone()
+        cur.close()
+        if not result:
+            return False
+        return True
+
+    @classmethod
     def _del_table(cls) -> None:
         """Private method for setup and testing"""
         cur = cls.con.cursor()
