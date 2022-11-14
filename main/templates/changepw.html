@@ -9,7 +9,7 @@
     <title>Change Password</title>
 
     <style>
-        body {background-image: url("bg.jpg");
+        body {background-image: radial-gradient( circle farthest-corner at 2.7% 6.3%,  rgba(138,235,185,1) 0%, rgba(24,40,115,1) 90% );
             font-family: Arial, Helvetica, sans-serif;
             height: 100vh;
             background-position: center;
@@ -29,11 +29,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 35vh;
-            width: 100%;
+            text-align: center;
             background-color: #3d4145;
             border-radius: 16px;
-            padding: 1.4rem;
+            padding: 1.4rem 2.8rem;
             box-shadow: 10px 10px 22px 1px rgba(0,0,0,0.65);
         }
         form label {
@@ -53,31 +52,29 @@
         }
         .form-container button:hover {
             transition: all 0.2s;
-            background-color: rgb(171, 171, 171);
+            background-color: #158c68;
             padding: 0.2rem 1rem;
         }
         a {
-            text-decoration: none;
-            color: #3d4145;
+            font-size: 0.8rem;
+            color: #708fab;
+        }
+        p {font-size: 1.2rem;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <section>
-
-    </section>
     <section class="home">
-        <h1>Change password</h1>
+        <h1>Change Password</h1>
         <div class="form-container">
-            <form>
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"><br>
-                <label for="newpw">New Password:</label><br>
-                <input type="password" id="newpw" name="newpw"><br>
-                <br><br>
-                
+            <form action="#", method="POST">
+                {{form.hidden_tag()}}
+                {{form.username}}<br>
+                {{form.oldpw}}<br>
+                {{form.newpw}}<br><br>
+                {{form.submit}}
             </form>
-            <button><a href="/">Update</a></button>
         </div>
     </section>
 </body>

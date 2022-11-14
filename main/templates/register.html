@@ -9,7 +9,7 @@
     <title>Registration</title>
 
     <style>
-        body {background-image: url("bg.jpg");
+        body {background-image: radial-gradient( circle farthest-corner at 2.7% 6.3%,  rgba(138,235,185,1) 0%, rgba(24,40,115,1) 90% );
             font-family: Arial, Helvetica, sans-serif;
             height: 100vh;
             background-position: center;
@@ -69,24 +69,12 @@
     <section class="home">
         <h1>Register new account!</h1>
         <div class="form-container">
-            <form action="#" method="post">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password"><br>
-                <label for="check">Repeat Password:</label><br>
-                <input type="password" id="check" name="check"><br>
-                <br><br>
-                {% block content %}
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p>{{message}}</p>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                {% endblock %}
-                <button type="submit">Create Account</button>
+            <form action="#" method="POST">
+                {{form.hidden_tag()}}
+                {{form.username}}<br>
+                {{form.password}}<br>
+                {{form.confirmation}}<br><br>
+                {{form.submit}}
             </form>
 
         </div>

@@ -9,7 +9,7 @@
     <title>Server Landing page</title>
 
     <style>
-        body {background-image: url("bg.jpg");
+        body {background-image: radial-gradient( circle farthest-corner at 2.7% 6.3%,  rgba(138,235,185,1) 0%, rgba(24,40,115,1) 90% );
             font-family: Arial, Helvetica, sans-serif;
             height: 100vh;
             background-position: center;
@@ -70,26 +70,13 @@
         <h1>Welcome to the Server!</h1>
         <div class="form-container">
             <form action="" method="POST">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password"><br>
-                <a href="register">Register here</a><br>
-                <a href="changepw">Change Password</a>
-
-                <br><br>
-                {% block content %}
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p>{{message}}</p>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                {% endblock %}
-                <button type="submit">Log me in!</button>
+                {{form.hidden_tag()}}
+                {{form.username}}<br>
+                {{form.password}}<br>
+                {{form.submit}}<br>
             </form>
-
+            <a href="register">Create Account</a>
+            <a href="changepw">Change Password</a>
         </div>
     </section>
 </body>
