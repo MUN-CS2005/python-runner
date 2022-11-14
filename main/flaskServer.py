@@ -78,4 +78,5 @@ def login():
 
 
 if __name__ == "__main__":
+    User._create_table()
     app.run(debug=True)

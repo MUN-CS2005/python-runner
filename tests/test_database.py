@@ -9,9 +9,6 @@ class TestDatabase(unittest.TestCase):
     def setUp(self) -> None:
         User._create_table()
 
-    def tearDown(self) -> None:
-        User._del_table()
-
     def test_create(self) -> None:
         """Test creation of a User object"""
         User.create("User1", "pass1")
