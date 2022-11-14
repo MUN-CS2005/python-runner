@@ -58,7 +58,7 @@ def home():
     return render_template("landingpage.html", form=form)
 
 
-@app.route("/<usr>", methods=['POST'])
+@app.route("/<usr>", methods=['POST', 'GET'])
 def index(usr):
     test = render_template("index.html").replace("<!-- OUTPUT PLACEHOLDERNAMEOFTHEACCOUNTUSER -->", usr)
     return test
