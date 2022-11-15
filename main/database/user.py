@@ -21,6 +21,7 @@ class User:
             password VARCHAR(255), 
             code VARCHAR(255));
         """)
+        cls.con.commit()
         cur.close()
 
     @classmethod
@@ -30,28 +31,30 @@ class User:
         Raises KeyError if user already exists.
         """
         cur = cls.con.cursor()
-        result = cur.execute("""SELECT * from user WHERE username = ?;""", (username,)).fetchone()
+        result = cur.execute("SELECT * from user WHERE username = ?;", (username,)).fetchone()
         if result:
             cur.close()
             raise KeyError("User already exists")
         cur.execute("""
                 INSERT INTO user(username, password, code) values (?,?,?);
             """, (username, password, code))
+        cls.con.commit()
         cur.close()
         return cls(username, password)
 
     def save(self) -> None:
         """Method to update a user in the database. Creates a new user if it does not exist"""
         cur = User.con.cursor()
-        result = cur.execute("""SELECT * from user WHERE username = ?;""",
+        result = cur.execute("SELECT * from user WHERE username = ?;",
                              (self.username,)).fetchone()
         if result:
-            cur.execute("""UPDATE user SET password = ?, code = ? WHERE username = ?;""",
+            cur.execute("UPDATE user SET password = ?, code = ? WHERE username = ?;",
                         (self.password, self.code, self.username))
         else:
             cur.execute("""
             INSERT INTO user(username, password, code) values (?,?,?);
         """, (self.username, self.password, self.code))
+        User.con.commit()
         cur.close()
 
     @classmethod
@@ -85,5 +88,13 @@ class User:
         """Private method for setup and testing"""
         cur = cls.con.cursor()
         cur.execute("DROP TABLE user;")
-        User.con.commit()
+        cls.con.commit()
+        cur.close()
+
+    @classmethod
+    def del_user(cls, username: str) -> None:
+        """Method to delete a user form"""
+        cur = cls.con.cursor()
+        cur.execute("DELETE FROM user WHERE username = ?;", (username,))
+        cls.con.commit()
         cur.close()
