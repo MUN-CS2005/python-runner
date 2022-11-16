@@ -10,7 +10,9 @@ class TestDatabase(unittest.TestCase):
         User._create_table()
 
     def tearDown(self) -> None:
-        User._del_table()
+        User.del_user("User1")
+        User.del_user("User2")
+        User.del_user("User3")
 
     def test_create(self) -> None:
         """Test creation of a User object"""

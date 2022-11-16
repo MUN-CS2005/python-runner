@@ -19,19 +19,20 @@
 
 <body>
 <div id="intro">
-    <label>Welcome, <!-- OUTPUT PLACEHOLDERNAMEOFTHEACCOUNTUSER -->"</label>
+    <label>Welcome, {{ username }}</label>
     <h1>Python Online Quiz</h1>
 </div>
 <br>
 <div>
+
     <form action="/run_code" method="POST">
-        <textarea name="codestuff" id="coding" rows="25" cols="80">ENTER CODE HERE</textarea>
+        <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
         <br>
         <button type="submit" id="run">Run</button>
     </form>
     <br>
     <div id="output">
-        <pre><!-- OUTPUT PLACEHOLDER --></pre>
+        <pre>{{ output }}</pre>
     </div>
     <br>
 </div>
