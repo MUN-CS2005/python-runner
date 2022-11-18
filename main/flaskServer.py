@@ -8,11 +8,8 @@ By Kevin Tanaka(kytanaka - 202049565)
 Date: Nov, 2022
 """
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Length, ValidationError
 from subprocess import PIPE, STDOUT, run
-from database.user import User
+from main.database.user import User
 
 app = Flask(__name__)
 app.secret_key = "testing"
@@ -21,30 +18,48 @@ app.secret_key = "testing"
 @app.route("/", methods=['POST', 'GET'])
 def home():
     username = session.get('username')
-    print(username)
     if username:
         user = User.get(username)
         session['code'] = user.code
         return render_template("index.html", code=user.code, username=username)
     return redirect(url_for('login'))
 
-# @app.route("/register", methods=['POST', 'GET'])
-# def registration():
-#     form = regform()
-#
-#     if form.validate_on_submit():
-#         #User.create(username=form.username.data, password=hash)
-#         return render_template("login.html", form=form)
-#     return render_template("register.html", form=form)
+
+@app.route("/change_password", methods=['POST', 'GET'])
+def update():
+    if request.method == 'POST':
+        user = request.form['username']
+        old_password = request.form['old_password']
+        new_password = request.form['new_password']
+        if not User.has_user(user):
+            return render_template("change_password.html", error_username_not_found=True)
+        current_user = User.get(user)
+        if old_password != current_user.password:
+            return render_template("change_password.html", error_password_do_not_match=True)
+        else:
+            User(user, new_password).save()
+            return render_template("login.html")
+    else:
+        return render_template("change_password.html")
 
 
-# @app.route("/changepw", methods=['POST', 'GET'])
-# def updatepw():
-#     form = changeform()
-#     if form.validate_on_submit():
-#         #return render_template("login.html", form=form)
-#         pass
-#     return render_template("changepw.html", form=form)
+@app.route("/register", methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        user = request.form['username']
+        password = request.form['password']
+        check = request.form['confirm']
+        if not user or not password:
+            return render_template("register.html", error_no_credentials=True)
+        elif User.has_user(user):
+            return render_template("register.html", error_username_unavailable=True)
+        elif password != check:
+            return render_template("register.html", error_passwords_do_not_match=True)
+        else:
+            User.create(user, password)
+            return redirect(url_for('home'))
+    else:
+        return render_template('register.html')
 
 
 @app.route("/run_code", methods=['POST'])
@@ -53,7 +68,7 @@ def runcode():
     code = request.form['codestuff']
     p = run("python", stdout=PIPE, shell=True, stderr=STDOUT, input=code, encoding='ascii')
     output = p.stdout
-    return render_template("index.html", code=code, output=output, username = session.get('username'))
+    return render_template("index.html", code=code, output=output, username=session.get('username'))
 
 
 @app.route("/login", methods=['POST', 'GET'])
@@ -62,7 +77,6 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        print(username)
         if not username or not password:
             return render_template("login.html", error=True)
         if User.has_user(username):

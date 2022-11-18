@@ -1,7 +1,7 @@
 """Tests for flask"""
 
 import unittest
-from ..main import flaskServer
+from main import flaskServer
 
 
 class TestFlask(unittest.TestCase):

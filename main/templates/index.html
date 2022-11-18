@@ -11,30 +11,78 @@
     <!-- Favicon -->
 
     <style>
-        p {font-size: 1.2rem;
-            color: white;
+        * {
+            margin: 0;
+            padding: 0;
+            color: #33bdc4;
+            overflow-x: hidden;
+        }
+        section {
+            padding: 2rem;
+            height: 100vh;
+            background-color: #222831;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            color: #96DB80;
+        }
+        #intro {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        #coding {
+            border: none;
+            border-radius: 1rem;
+            background-color: #393E46;
+            padding: 1rem;
+            outline: none;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        form button {
+            font-size: 1.4rem;
+            padding: 0.2rem 1rem;
+            border: none;
+            border-radius: 2rem;
+            background-color: #EEEEEE;
+            color: #393E46;
+            transition: all 0.3s;
+        }
+        form button:hover {
+            padding: 0.4rem 1.6rem;
+            color: #222831;
+            background-color: #00ADB5;
+            transition: all 0.3s;
+        }
+        #output {
+            color: #EEEEEE;
         }
     </style>
 </head>
 
 <body>
-<div id="intro">
-    <label>Welcome, {{ username }}</label>
-    <h1>Python Online Quiz</h1>
-</div>
-<br>
-<div>
-
-    <form action="/run_code" method="POST">
-        <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
-        <br>
-        <button type="submit" id="run">Run</button>
-    </form>
-    <br>
-    <div id="output">
-        <pre>{{ output }}</pre>
-    </div>
-    <br>
-</div>
+    <section>
+        <div id="intro">
+            <label>Welcome, {{ username }}</label>
+            <h1>Python Online Quiz</h1>
+        </div>
+        <div id="console">
+            <form action="/run_code" method="POST">
+                <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
+                <br>
+                <button type="submit" id="run">Run</button>
+            </form>
+            <div id="output">
+                <pre>{{ output }}</pre>
+            </div>
+            <br>
+        </div>
+    </section>
 </body>
 </html>
