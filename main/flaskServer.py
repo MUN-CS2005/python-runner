@@ -13,9 +13,13 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from subprocess import PIPE, STDOUT, run
 from database.user import User
+import LogData
 
 app = Flask(__name__)
 app.secret_key = "testing"
+
+logfile = "log.txt"
+logger = LogData.Logdata(logfile)
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -25,6 +29,7 @@ def home():
     if username:
         user = User.get(username)
         session['code'] = user.code
+        logger.record_log("home", str(user.username), str(session['code']))
         return render_template("index.html", code=user.code, username=username)
     return redirect(url_for('login'))
 
@@ -53,6 +58,7 @@ def runcode():
     code = request.form['codestuff']
     p = run("python", stdout=PIPE, shell=True, stderr=STDOUT, input=code, encoding='ascii')
     output = p.stdout
+    logger.record_log("User Runcode", session.get('username'))
     return render_template("index.html", code=code, output=output, username = session.get('username'))
 
 
@@ -70,6 +76,7 @@ def login():
             if user.password != password:
                 return render_template("login.html", error=True)
             session['username'] = user.username
+            logger.record_log("UserLogin", str(username))
             return redirect(url_for('home'))
         else:
             return render_template("login.html", error=True)
