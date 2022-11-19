@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+		Enter Time<br>
+		SECOND: <input type="text" id="th" value="0"><br><br>
+		<button type="button" onclick="main()">Start!</button>
+		<p id="tx"><p></p>
+	</p>
+	<script>
+		var a;
+		var timeVar;
+		let status=0;
+		function main()
+		{
+			a=th.value*1000;
+			timeVar=setInterval(function(){time()},1000);
+		}
+		function time()
+		{
+			s=(a%60000)/1000;
+			m=((a-s*1000)%(60000*60))/(1000*60);
+			h=(a-s*1000-m*60000)/(1000*60*60);
+			if(a>=0){
+				document.getElementById("tx").innerHTML = "Time Remaining "+h+" hour "+m+" minute "+s+" second ";
+				a=a-1000;
+			}else{
+			    if(status==0){
+                    status = 1;
+                    showTimeOver()
+                }
+                document.getElementById("tx").innerHTML = "Time Over";
+                clearInterval(timeVar);
+			}
+		}
+		function showTimeOver()
+		{
+	  	 	alert("Time Exceeded！");
+		}
+	</script>
+</body>
+</html>
