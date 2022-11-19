@@ -42,7 +42,7 @@ def update():
         if old_password != current_user.password:
             return render_template("change_password.html", error_password_do_not_match=True)
         else:
-            User(user, new_password).save()
+            User(user, new_password, current_user.code).save()
             return render_template("login.html")
     else:
         return render_template("change_password.html")
