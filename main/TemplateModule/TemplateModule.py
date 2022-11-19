@@ -12,8 +12,9 @@ from flask import render_template
 class Template:
     """
     This is the template module class.
+    This class can replace a html page's keywords with specified strings.
     For more intuitive information, check TemplateModule.html and the unit test.
-    This module is not yet completed, everything depends on how the project goes.
+    This module may be modified.
 
     Attributes:
         _placeholder: A {key: Value} dic indicates the keys to be replaced with values in a given html page.
