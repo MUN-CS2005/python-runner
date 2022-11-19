@@ -66,6 +66,12 @@ class Timing:
         else:
             return True
 
+    def get_time_limit(self):
+        """
+        :return: an integer number which represents time limit in seconds for this instance.
+        """
+        return self.timelimit
+
 
 if __name__ == '__main__':
     t = Timing(1)   # 1 second limit
