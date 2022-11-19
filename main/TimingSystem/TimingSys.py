@@ -8,6 +8,7 @@ Author: Ruixiao Lu
 Date: Nov. 2022
 """
 
+
 class Timing:
     """
     An instance of this Timing class stores a time of when it is created, an ending time when it is stopped, a time
@@ -70,4 +71,4 @@ if __name__ == '__main__':
     t = Timing(1)   # 1 second limit
     time.sleep(2)   # sleep 2 seconds
     print(t.check_time_exceed())  # return true cuz it exceeds
-    print(t.stop()) # return 2 seconds as the quiz ends. the student exceeds the quiz limit for 1 second.
+    print(t.stop())  # return 2 seconds as the quiz ends. the student exceeds the quiz limit for 1 second.
