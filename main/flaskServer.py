@@ -27,6 +27,11 @@ def home():
 
 @app.route("/change_password", methods=['POST', 'GET'])
 def update():
+    """
+    Routing the "/change_password" page
+    If user does not exist in database, or if password do not match,
+    it raises an error and displays it
+    """
     if request.method == 'POST':
         user = request.form['username']
         old_password = request.form['old_password']
@@ -45,6 +50,11 @@ def update():
 
 @app.route("/register", methods=['POST', 'GET'])
 def register():
+    """
+    Routing the "/register" page
+    If user does not input anything, or username is unavailable, or passwords do not match,
+    it raises an error and displays it
+    """
     if request.method == 'POST':
         user = request.form['username']
         password = request.form['password']

@@ -1,4 +1,4 @@
-"""Tests for flask"""
+"""Tests for flask server"""
 
 import unittest
 from main import flaskServer
