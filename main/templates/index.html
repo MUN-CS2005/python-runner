@@ -59,10 +59,10 @@
             transition: all 0.3s;
         }
         form button:hover {
-            padding: 0.4rem 1.6rem;
+            padding: 0.2rem 1.6rem;
             color: #222831;
             background-color: #00ADB5;
-            transition: all 0.3s;
+            transition: ease-out 0.3s;
         }
         #output {
             color: #EEEEEE;
@@ -74,6 +74,18 @@
             right: 30px;
             top: 10px;
             display: block;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        #logout:hover {
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            color: #adb5bd;
+        }
+        #page {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
     </style>
 </head>
@@ -81,12 +93,11 @@
 <body>
     <section>
         <a href="login" id="logout">Logout</a>
-        <div>
+        <div id="page">
             <div id="intro">
                 <label>Welcome, {{ username }}</label>
                 <h1>Python Online Quiz</h1>
             </div>
-            <br>
             <form method="POST" id="runform">
                 <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
                 <div id="btns">
