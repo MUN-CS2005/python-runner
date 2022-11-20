@@ -1,13 +1,13 @@
 import unittest
-from main import flaskServer
+from main import flask_server
 from main.database.user import User
 
 
 class TestSaveLoad(unittest.TestCase):
 
     def setUp(self) -> None:
-        flaskServer.app.testing = True
-        self.app = flaskServer.app.test_client()
+        flask_server.app.testing = True
+        self.app = flask_server.app.test_client()
         try:
             User.create("test1", "pass1")
         except KeyError:
