@@ -13,8 +13,8 @@ class User:
         self.code = code
 
     @classmethod
-    def _create_table(cls) -> None:
-        """Private method for setup and testing"""
+    def create_table(cls) -> None:
+        """Method for setup and testing"""
         cur = cls.con.cursor()
         cur.execute("""CREATE TABLE IF NOT EXISTS user
             (username VARCHAR(255) PRIMARY KEY, 
