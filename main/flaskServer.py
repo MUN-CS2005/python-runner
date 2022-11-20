@@ -145,5 +145,5 @@ def login():
 
 
 if __name__ == "__main__":
-    User._create_table()
+    User.create_table()
     app.run(debug=True)
