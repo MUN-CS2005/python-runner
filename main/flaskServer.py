@@ -12,7 +12,6 @@ from subprocess import PIPE, STDOUT, run
 from main.database.user import User
 from main.LogData import LogData
 
-
 app = Flask(__name__)
 app.secret_key = "testing"
 
@@ -84,7 +83,11 @@ def runcode():
     code = request.form['codestuff']
     p = run("python", stdout=PIPE, shell=True, stderr=STDOUT, input=code, encoding='ascii')
     output = p.stdout
-    logger.record_log("runcode()", session.get('username'))
+    try:
+        logger.record_log("runcode()", session.get('username'))
+    except TypeError as e:
+        print(e)
+        raise
     return render_template("index.html", code=code, output=output, username=session.get('username'))
 
 
