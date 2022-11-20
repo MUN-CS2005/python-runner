@@ -9,6 +9,7 @@
     <title>Registration</title>
 
     <style>
+        * {margin:0; padding:0;}
         body {background-image: radial-gradient( circle farthest-corner at 2.7% 6.3%,  rgba(138,235,185,1) 0%, rgba(24,40,115,1) 90% );
             font-family: Arial, Helvetica, sans-serif;
             height: 100vh;
@@ -19,6 +20,7 @@
         h1 {color: #20c997;}
         .home {
             display: flex;
+
             flex-direction: column;
             gap: 2rem;
             align-items: center;
@@ -44,15 +46,13 @@
         }
         .form-container button {
             padding: 0.2rem 0.6rem;
-            font-size: 1.2rem;
-            border-radius: 16px;
-            border-color: rgba(0, 0, 0, 0);
-            cursor: pointer;
-            transition: all 0.2s;
+            border: solid white;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
         .form-container button:hover {
             transition: all 0.2s;
-            background-color: #158c68;
+            background-color: rgb(171, 171, 171);
             padding: 0.2rem 1rem;
         }
         a {
@@ -62,21 +62,46 @@
         p {font-size: 1.2rem;
             color: white;
         }
+        input {font-size:1rem;}
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .error {
+            border: 1px solid red;
+            border-radius: 5px;
+            color: red;
+            padding: 10px;
+        }
 
     </style>
 </head>
 <body>
     <section class="home">
         <h1>Register new account!</h1>
+        {% if error_no_credentials %}
+        <div class="error">
+        Incorrect username or password...
+        </div>
+        {% endif %}
+        {% if error_passwords_do_not_match %}
+        <div class="error">
+            Passwords do not match! Please try again...
+        </div>
+        {% endif %}
+        {% if error_username_unavailable %}
+        <div class="error">
+            Username already exists in database! Please try another username...
+        </div>
+        {% endif %}
         <div class="form-container">
-            <form action="#" method="POST">
-                {{form.hidden_tag()}}
-                {{form.username}}<br>
-                {{form.password}}<br>
-                {{form.confirmation}}<br><br>
-                {{form.submit}}
+            <form action="/register" method="POST">
+                <input name="username" placeholder="Username" required>
+                <input name="password" type="password" placeholder="Password" required>
+                <input name="confirm" type="password" placeholder="Confirm Password" required>
+                <br>
+                <button type="submit"> Create Account </button>
             </form>
-
         </div>
     </section>
 </body>
