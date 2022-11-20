@@ -6,13 +6,16 @@ from main.database.user import User
 class TestDatabase(unittest.TestCase):
     """Tests for Persistent Storage"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         User.create_table()
 
-    def tearDown(self) -> None:
+    @classmethod
+    def tearDownClass(cls) -> None:
         User.del_user("User1")
         User.del_user("User2")
         User.del_user("User3")
+        User.del_user("User4")
 
     def test_create(self) -> None:
         """Test creation of a User object"""
@@ -34,6 +37,10 @@ class TestDatabase(unittest.TestCase):
         user2 = User.get("User3")
         self.assertEqual(("User3", "changed_pass", "changed_code3"),
                          (user2.username, user2.password, user2.code))
+
+    def test_has_user(self) -> None:
+        User.create("User4", "pass4")
+        self.assertTrue(User.has_user("User1"))
 
 
 if __name__ == '__main__':
