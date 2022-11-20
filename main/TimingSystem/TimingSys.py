@@ -60,9 +60,9 @@ class Timing:
         :return: Boolean if the quiz is over.
         """
         if not self.status:
-            t = time.time() - self.start
-            if t >= self.timelimit:
-                self.duration = t
+            timegap = time.time() - self.start
+            if timegap >= self.timelimit:
+                self.duration = timegap
                 self.status = True
 
             return self.status
