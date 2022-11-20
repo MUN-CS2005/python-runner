@@ -1,3 +1,4 @@
+"""Creates SQL Connection"""
 import sqlite3
 import os
 
@@ -9,4 +10,5 @@ class Connection:
 
     @classmethod
     def get_instance(cls) -> sqlite3.Connection:
+        """Returns an SQL Connection to the database"""
         return cls.con
