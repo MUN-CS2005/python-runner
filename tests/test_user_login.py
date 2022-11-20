@@ -1,7 +1,7 @@
 """Tests for flask server"""
 
 import unittest
-from main import flaskServer
+from main import flask_server
 from main.database.user import User
 
 
@@ -10,8 +10,8 @@ class TestUserLogin(unittest.TestCase):
 
     def setUp(self) -> None:
         User.create_table()
-        flaskServer.app.testing = True
-        self.app = flaskServer.app.test_client()
+        flask_server.app.testing = True
+        self.app = flask_server.app.test_client()
 
     def tearDown(self) -> None:
         User._del_table()

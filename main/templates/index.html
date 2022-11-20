@@ -67,11 +67,20 @@
         #output {
             color: #EEEEEE;
         }
+        #logout {
+            position: fixed;
+            font-size: 1rem;
+            z-index: 20;
+            right: 30px;
+            top: 10px;
+            display: block;
+        }
     </style>
 </head>
 
 <body>
     <section>
+        <a href="login" id="logout">Logout</a>
         <div>
             <div id="intro">
                 <label>Welcome, {{ username }}</label>
