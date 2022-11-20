@@ -10,7 +10,7 @@ Date: Nov, 2022
 from flask import Flask, render_template, request, redirect, url_for, session
 from subprocess import PIPE, STDOUT, run
 from main.database.user import User
-from main.LogData import LogData
+import LogData
 
 
 app = Flask(__name__)
@@ -86,6 +86,41 @@ def runcode():
     output = p.stdout
     logger.record_log("runcode()", session.get('username'))
     return render_template("index.html", code=code, output=output, username=session.get('username'))
+
+
+@app.route("/save_code", methods=['POST'])
+def save_code():
+    """
+        saves the code when the save button is pushed
+    """
+    username = session.get('username')
+    print(username)
+    code = request.form['codestuff']
+    print(code)
+    if username:
+        user = User.get(username)
+        user.code = code
+        user.save()
+    else:
+        print("unable to find user")
+    return render_template("index.html", code=code, username=session.get('username'))
+
+
+@app.route("/load_code", methods=['POST'])
+def load_code():
+    """
+        loads the code from the database and puts it into codestuff when the load button is pushed
+    """
+    username = session.get('username')
+    print(username)
+    if username:
+        user = User.get(username)
+        code = user.code
+    else:
+        print("unable to find User")
+        code = request.form['codestuff']
+        print(code)
+    return render_template("index.html", code=code, username=session.get('username'))
 
 
 @app.route("/login", methods=['POST', 'GET'])
