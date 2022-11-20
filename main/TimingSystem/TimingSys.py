@@ -4,6 +4,9 @@ A solution for TimingSystem.
 Library used:
     time
 
+Currently This module does not work properly, as a backend module, it does not communicate with frontend webpage.
+A solution to build communication between webpage time record script and backend python class instance is requied.
+
 Author: Ruixiao Lu
 Date: Nov. 2022
 """
