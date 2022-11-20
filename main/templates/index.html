@@ -45,6 +45,10 @@
             align-items: center;
             gap: 0.6rem;
         }
+        #btns {
+            display: flex;
+            gap: 1rem;
+        }
         form button {
             font-size: 1.4rem;
             padding: 0.2rem 1rem;
@@ -67,25 +71,25 @@
 </head>
 
 <body>
-<div id="intro">
-    <label>Welcome, {{ username }}</label>
-    <h1>Python Online Quiz</h1>
-</div>
-<br>
-<div>
-
-    <form method="POST" id="runform">
-        <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
-        <br>
-        <button formaction = "/run_code" type="submit" id="run">Run</button>
-        <button formaction = "/save_code" type="submit" id="save">Save</button>
-        <button formaction = "/load_code" type="submit" >Load</button>
-    </form>
-    <br>
-    <div id="output">
-        <pre>{{ output }}</pre>
-    </div>
-    <br>
-</div>
+    <section>
+        <div>
+            <div id="intro">
+                <label>Welcome, {{ username }}</label>
+                <h1>Python Online Quiz</h1>
+            </div>
+            <br>
+            <form method="POST" id="runform">
+                <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
+                <div id="btns">
+                    <button formaction = "/run_code" type="submit" id="run">Run</button>
+                    <button formaction = "/save_code" type="submit" id="save">Save</button>
+                    <button formaction = "/load_code" type="submit" >Load</button>
+                </div>
+            </form>
+            <div id="output">
+                <pre>{{ output }}</pre>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

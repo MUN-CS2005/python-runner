@@ -10,7 +10,7 @@ Date: Nov, 2022
 from flask import Flask, render_template, request, redirect, url_for, session
 from subprocess import PIPE, STDOUT, run
 from main.database.user import User
-import LogData
+from main.LogData import LogData
 
 
 app = Flask(__name__)
