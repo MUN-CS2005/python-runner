@@ -18,7 +18,7 @@ class TestUserLogin(unittest.TestCase):
 
     def test_create_user(self):
         """Test creation of user account through flask server"""
-        rv = self.app.post('/register', data=dict(
+        self.app.post('/register', data=dict(
             username='userTest1',
             password='userTest1pw',
             confirm='userTest1pw'
@@ -28,7 +28,7 @@ class TestUserLogin(unittest.TestCase):
     def test_change_password(self):
         """Test password change through flask server"""
         User.create('userTest1', 'userTest1pw')
-        rv = self.app.post('/change_password', data=dict(
+        self.app.post('/change_password', data=dict(
             username='userTest1',
             old_password='userTest1pw',
             new_password='avocado'
