@@ -11,4 +11,4 @@ setup(
     package_data={
         '': ['*.txt', '*.pdf']},
 )
-User._create_table()
+User.create_table()

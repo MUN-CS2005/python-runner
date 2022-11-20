@@ -9,7 +9,7 @@ class TestUserLogin(unittest.TestCase):
     """Tests for User login"""
 
     def setUp(self) -> None:
-        User._create_table()
+        User.create_table()
         flaskServer.app.testing = True
         self.app = flaskServer.app.test_client()
 

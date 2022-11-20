@@ -7,7 +7,7 @@ class TestDatabase(unittest.TestCase):
     """Tests for Persistent Storage"""
 
     def setUp(self) -> None:
-        User._create_table()
+        User.create_table()
 
     def tearDown(self) -> None:
         User.del_user("User1")
