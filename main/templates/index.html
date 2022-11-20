@@ -25,10 +25,12 @@
 <br>
 <div>
 
-    <form action="/run_code" method="POST">
+    <form method="POST" id="runform">
         <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
         <br>
-        <button type="submit" id="run">Run</button>
+        <button formaction = "/run_code" type="submit" id="run">Run</button>
+        <button formaction = "/save_code" type="submit" id="save">Save</button>
+        <button formaction = "/load_code" type="submit" >Load</button>
     </form>
     <br>
     <div id="output">
