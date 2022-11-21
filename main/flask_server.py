@@ -15,8 +15,8 @@ from main.LogData import LogData
 app = Flask(__name__)
 app.secret_key = "testing"
 
-logfile = "log.txt"
-logger = LogData.Logdata(logfile)
+LOGFILE = "log.txt"
+logger = LogData.Logdata(LOGFILE)
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -67,9 +67,9 @@ def register():
         check = request.form['confirm']
         if not user or not password:
             return render_template("register.html", error_no_credentials=True)
-        elif User.has_user(user):
+        if User.has_user(user):
             return render_template("register.html", error_username_unavailable=True)
-        elif password != check:
+        if password != check:
             return render_template("register.html", error_passwords_do_not_match=True)
         User.create(user, password)
         return redirect(url_for('home'))
@@ -80,8 +80,9 @@ def register():
 def run_code():
     """Routing the "/run_code" page"""
     code = request.form['codestuff']
-    code_run = run("python", stdout=PIPE, shell=True, stderr=STDOUT, input=code, encoding='ascii')
-    output = code_run.stdout
+    python_result = run("python", stdout=PIPE, shell=True, stderr=STDOUT,
+                        input=code, encoding='ascii', check=False)
+    output = python_result.stdout
     try:
         logger.record_log("runcode()", session.get('username'))
     except TypeError:
@@ -94,11 +95,11 @@ def run_code():
 def save_code():
     """
         saves the code when the save button is pushed
+        output is not preserved
+        if username is not found does not save code
     """
     username = session.get('username')
-    print(username)
     code = request.form['codestuff']
-    print(code)
     if username:
         user = User.get(username)
         user.code = code
@@ -117,17 +118,19 @@ def logout():
 @app.route("/load_code", methods=['POST'])
 def load_code():
     """
-        loads the code from the database and puts it into codestuff when the load button is pushed
+        loads the code from the database and puts it into
+        codestuff when the load button is pushed
+        output is not preserved
+        if username is not found keeps current code
+
     """
     username = session.get('username')
-    print(username)
     if username:
         user = User.get(username)
         code = user.code
     else:
         print("unable to find User")
         code = request.form['codestuff']
-        print(code)
     return render_template("index.html", code=code, username=session.get('username'))
 
 
@@ -146,10 +149,15 @@ def login():
                 return render_template("login.html", error=True)
             session['username'] = user.username
             return redirect(url_for('home'))
-        else:
-            return render_template("login.html", error=True)
-    else:
-        return render_template('login.html')
+        return render_template("login.html", error=True)
+    return render_template('login.html')
+
+
+@app.route("/logout", methods=['POST'])
+def logout():
+    """Route for logging out a user"""
+    session.clear()
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":
