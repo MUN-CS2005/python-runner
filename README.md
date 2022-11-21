@@ -6,7 +6,7 @@
 - The performance review for cycle 5 is a part of "Meeting minutes 2" on the kanban board. As a group we discussed the strengths and weaknesses each member faced
 - All other documentation is within the kanban board or meeting minutes
 
-   ##C Team Submission 6
+   ## C Team Submission 6
 -The log file can be found under main/log.txt
 -The team meeting notes can be found on the kanban board under "Meeting minutes 3" and "Meeting minutes 4" respectively.
 -The performance review for cycle 6 is a part of "Meeting minutes 4" on the kanban board. As a group we discussed how progress happended within cycle 6
