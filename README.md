@@ -7,11 +7,11 @@
 - All other documentation is within the kanban board or meeting minutes
 
    ## C Team Submission 6
--The log file can be found under main/log.txt
--The team meeting notes can be found on the kanban board under "Meeting minutes 3" and "Meeting minutes 4" respectively.
--The performance review for cycle 6 is a part of "Meeting minutes 4" on the kanban board. As a group we discussed how progress happended within cycle 6
--The next task can be found in a comment on "meeting minutes 4"
--intial due date for Cycle is Novemeber 19th with updates based on code review due 10 PM Novemeber 20th
+- The log file can be found under main/log.txt
+- The team meeting notes can be found on the kanban board under "Meeting minutes 3" and "Meeting minutes 4" respectively.
+- The performance review for cycle 6 is a part of "Meeting minutes 4" on the kanban board. As a group we discussed how progress happended within cycle 6
+- The next task can be found in a comment on "meeting minutes 4"
+- intial due date for Cycle is Novemeber 19th with updates based on code review due 10 PM Novemeber 20th
 
 ## Installation
 
