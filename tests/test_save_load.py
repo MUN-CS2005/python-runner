@@ -18,18 +18,39 @@ class TestSaveLoad(unittest.TestCase):
         User.del_user("test1")
 
     def testSave(self):
+        """
+        tests the user saving the code
+        must first log the user in
+        then saves the code
+        updates user and tests to see if
+        code has been saved
+        """
+
         user = User.get("test1")
-        self.app.post("/save_code", data=dict(
+        self.app.post("/login", data=dict(
             username=user.username,
+            password=user.password
+        ))
+        self.app.post("/save_code", data=dict(
             codestuff="print(\"saving\")"
         ), follow_redirects=True)
+        user = User.get("test1")
         self.assertEqual("print(\"saving\")", user.code)
 
     def testLoad(self):
+        """
+        tests the loading function
+        first saves test values directly to database
+        then tries to retrieve the data
+        asserts data has been loaded
+        """
+
         user = User.get("test1")
         user.code = "print(\"loading\")"
         user.save()
-        load = self.app.post("/load_code", data=dict(
+        self.app.post("/login", data=dict(
             username=user.username,
-        ), follow_redirects=True)
+            password=user.password
+        ))
+        load = self.app.post("/load_code", follow_redirects=True)
         assert b'loading' in load.data
