@@ -25,7 +25,7 @@ def home():
     Routing for main page
     """
     username = session.get('username')
-    if username:
+    if username and User.has_user(username):
         user = User.get(username)
         session['code'] = user.code
         logger.record_log("home()", str(user.username), str(session['code']))
