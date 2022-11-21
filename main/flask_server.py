@@ -97,11 +97,11 @@ def run_code():
 def save_code():
     """
         saves the code when the save button is pushed
+        output is not preserved
+        if username is not found does not save code
     """
     username = session.get('username')
-    print(username)
     code = request.form['codestuff']
-    print(code)
     if username:
         user = User.get(username)
         user.code = code
@@ -114,17 +114,19 @@ def save_code():
 @app.route("/load_code", methods=['POST'])
 def load_code():
     """
-        loads the code from the database and puts it into codestuff when the load button is pushed
+        loads the code from the database and puts it into
+        codestuff when the load button is pushed
+        output is not preserved
+        if username is not found keeps current code
+
     """
     username = session.get('username')
-    print(username)
     if username:
         user = User.get(username)
         code = user.code
     else:
         print("unable to find User")
         code = request.form['codestuff']
-        print(code)
     return render_template("index.html", code=code, username=session.get('username'))
 
 
