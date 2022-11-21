@@ -108,6 +108,12 @@ def save_code():
     return render_template("index.html", code=code, username=session.get('username'))
 
 
+@app.route("/logout", methods=['POST'])
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+
 @app.route("/load_code", methods=['POST'])
 def load_code():
     """

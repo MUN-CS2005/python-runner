@@ -67,7 +67,7 @@
         #output {
             color: #EEEEEE;
         }
-        #logout {
+        #logout_btn {
             position: fixed;
             font-size: 1rem;
             z-index: 20;
@@ -77,10 +77,10 @@
             text-decoration: none;
             transition: all 0.3s;
         }
-        #logout:hover {
-            font-size: 1.2rem;
+        #logout_btn:hover {
+            font-size: 1rem;
             transition: all 0.3s;
-            color: #adb5bd;
+            color: #EEEEEE;
         }
         #page {
             display: flex;
@@ -92,7 +92,9 @@
 
 <body>
     <section>
-        <a href="login" id="logout">Logout</a>
+        <form method="POST">
+            <button id="logout_btn" formaction = "/login" type="submit">Logout</button>
+        </form>
         <div id="page">
             <div id="intro">
                 <label>Welcome, {{ username }}</label>
