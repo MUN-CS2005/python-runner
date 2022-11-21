@@ -7,16 +7,16 @@ Libraries used:
 By Kevin Tanaka(kytanaka - 202049565)
 Date: Nov, 2022
 """
-from flask import Flask, render_template, request, redirect, url_for, session
 from subprocess import PIPE, STDOUT, run
+from flask import Flask, render_template, request, redirect, url_for, session
 from main.database.user import User
 from main.LogData import LogData
 
 app = Flask(__name__)
 app.secret_key = "testing"
 
-logfile = "log.txt"
-logger = LogData.Logdata(logfile)
+LOGFILE = "log.txt"
+logger = LogData.Logdata(LOGFILE)
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -49,11 +49,9 @@ def update():
         current_user = User.get(user)
         if old_password != current_user.password:
             return render_template("change_password.html", error_password_do_not_match=True)
-        else:
-            User(user, new_password, current_user.code).save()
-            return render_template("login.html")
-    else:
-        return render_template("change_password.html")
+        User(user, new_password, current_user.code).save()
+        return render_template("login.html")
+    return render_template("change_password.html")
 
 
 @app.route("/register", methods=['POST', 'GET'])
@@ -69,27 +67,27 @@ def register():
         check = request.form['confirm']
         if not user or not password:
             return render_template("register.html", error_no_credentials=True)
-        elif User.has_user(user):
+        if User.has_user(user):
             return render_template("register.html", error_username_unavailable=True)
-        elif password != check:
+        if password != check:
             return render_template("register.html", error_passwords_do_not_match=True)
-        else:
-            User.create(user, password)
-            return redirect(url_for('home'))
-    else:
-        return render_template('register.html')
+        User.create(user, password)
+        return redirect(url_for('home'))
+    return render_template('register.html')
 
 
 @app.route("/run_code", methods=['POST'])
 def run_code():
     """Routing the "/run_code" page"""
     code = request.form['codestuff']
-    p = run("python", stdout=PIPE, shell=True, stderr=STDOUT, input=code, encoding='ascii')
-    output = p.stdout
+    python_result = run("python", stdout=PIPE, shell=True, stderr=STDOUT,
+                        input=code, encoding='ascii', check=False)
+    output = python_result.stdout
     try:
         logger.record_log("runcode()", session.get('username'))
     except TypeError:
-        return render_template("index.html", code=code, output=output, username=session.get('username'))
+        return render_template("index.html", code=code, output=output,
+                               username=session.get('username'))
     return render_template("index.html", code=code, output=output, username=session.get('username'))
 
 
@@ -145,10 +143,15 @@ def login():
                 return render_template("login.html", error=True)
             session['username'] = user.username
             return redirect(url_for('home'))
-        else:
-            return render_template("login.html", error=True)
-    else:
-        return render_template('login.html')
+        return render_template("login.html", error=True)
+    return render_template('login.html')
+
+
+@app.route("/logout", methods=['POST'])
+def logout():
+    """Route for logging out a user"""
+    session.clear()
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":

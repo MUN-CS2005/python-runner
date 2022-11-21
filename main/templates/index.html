@@ -80,7 +80,9 @@
 
 <body>
     <section>
-        <a href="login" id="logout">Logout</a>
+        <form method="post">
+            <button formaction="/logout" id="logout">Logout</button>
+        </form>
         <div>
             <div id="intro">
                 <label>Welcome, {{ username }}</label>
