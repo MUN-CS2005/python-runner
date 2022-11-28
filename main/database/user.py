@@ -84,11 +84,11 @@ class User:
         return True
 
     @classmethod
-    def fetch_all(self):
+    def fetch_all(cls):
         """
         Returns iterator of every user found in database
         """
-        cur = self.con.cursor()
+        cur = cls.con.cursor()
         result = cur.execute("SELECT * from user;", cur.fetchall())
         if not result:
             cur.close()
