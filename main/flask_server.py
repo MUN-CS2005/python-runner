@@ -67,13 +67,37 @@ def register():
         check = request.form['confirm']
         if not user or not password:
             return render_template("register.html", error_no_credentials=True)
-        if User.has_user(user):
+        if User.has_user(user) or user == "admin":
             return render_template("register.html", error_username_unavailable=True)
         if password != check:
             return render_template("register.html", error_passwords_do_not_match=True)
         User.create(user, password)
         return redirect(url_for('home'))
     return render_template('register.html')
+
+
+@app.route("/create", methods=['POST'])
+def create():
+    """Routing for the "create" page used from the admin page"""
+    users = User.fetch_all()
+    username = request.form['username']
+    password = request.form['password']
+    if not username or not password:
+        return render_template("index.html", error_no_credentials=True, users=users, admin=True)
+    if User.has_user(username) or username == "admin":
+        return render_template("index.html", error_username_taken=True, users=users, admin=True)
+    User.create(username, password)
+    users = User.fetch_all()
+    return render_template("index.html", success=True, users=users, admin=True)
+
+
+@app.route("/delete", methods=["POST"])
+def remove():
+    """Routing for the "remove" page used from the admin page"""
+    username = request.form['username']
+    User.del_user(username)
+    users = User.fetch_all()
+    return render_template("index.html", success_deleted=True, users=users, admin=True)
 
 
 @app.route("/run_code", methods=['POST'])
@@ -88,6 +112,10 @@ def run_code():
     except TypeError:
         return render_template("index.html", code=code, output=output,
                                username=session.get('username'))
+    if session.get('admin'):
+        users = User.fetch_all()
+        return render_template("index.html", code=code, output=output,
+                               username=session.get('username'), admin=True, users=users)
     return render_template("index.html", code=code, output=output, username=session.get('username'))
 
 
@@ -99,6 +127,7 @@ def save_code():
         if username is not found does not save code
     """
     username = session.get('username')
+    print(username)
     code = request.form['codestuff']
     if username:
         user = User.get(username)
@@ -106,13 +135,11 @@ def save_code():
         user.save()
     else:
         print("unable to find user")
+    if session.get('admin'):
+        users = User.fetch_all()
+        return render_template("index.html", code=code, username=session.get('username'),
+                               admin=True, users=users)
     return render_template("index.html", code=code, username=session.get('username'))
-
-
-@app.route("/logout", methods=['POST'])
-def logout():
-    session.clear()
-    return redirect(url_for('login'))
 
 
 @app.route("/load_code", methods=['POST'])
@@ -131,6 +158,10 @@ def load_code():
     else:
         print("unable to find User")
         code = request.form['codestuff']
+    if session.get('admin'):
+        users = User.fetch_all()
+        return render_template("index.html", code=code, username=session.get('username'),
+                               admin=True, users=users)
     return render_template("index.html", code=code, username=session.get('username'))
 
 
@@ -141,6 +172,10 @@ def login():
         username = request.form['username']
         password = request.form['password']
         logger.record_log("login()", str(username))
+        if username == "admin" and password == "software":
+            users = User.fetch_all()
+            session['admin'] = True
+            return redirect(url_for('admin', username=username, admin=True, users=users))
         if not username or not password:
             return render_template("login.html", error=True)
         if User.has_user(username):
@@ -151,6 +186,20 @@ def login():
             return redirect(url_for('home'))
         return render_template("login.html", error=True)
     return render_template('login.html')
+
+
+@app.route("/admin", methods=['POST', 'GET'])
+def admin():
+    """Route for admin page"""
+    users = User.fetch_all()
+    if request.method == "POST":
+        username = request.form['username']
+        user = User.get(username)
+        code_user = user.code
+        session['username'] = user.username
+        return render_template("index.html", users=users, code=code_user, admin=True,
+                               username=user.username)
+    return render_template("index.html", users=users, admin=True)
 
 
 @app.route("/logout", methods=['POST'])
