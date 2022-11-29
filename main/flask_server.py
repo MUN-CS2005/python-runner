@@ -127,7 +127,6 @@ def save_code():
         if username is not found does not save code
     """
     username = session.get('username')
-    print(username)
     code = request.form['codestuff']
     if username:
         user = User.get(username)
@@ -199,6 +198,8 @@ def admin():
         session['username'] = user.username
         return render_template("index.html", users=users, code=code_user, admin=True,
                                username=user.username)
+    if request.method == "GET":
+        return request.form['codestuff']
     return render_template("index.html", users=users, admin=True)
 
 
