@@ -198,8 +198,6 @@ def admin():
         session['username'] = user.username
         return render_template("index.html", users=users, code=code_user, admin=True,
                                username=user.username)
-    if request.method == "GET":
-        return request.form['codestuff']
     return render_template("index.html", users=users, admin=True)
 
 
