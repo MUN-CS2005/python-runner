@@ -42,3 +42,8 @@ To start the server run the follwing file
 ```
 main/flask_server.py
 ```
+
+To gain access to the admin page:
+   Username: "admin"
+   Password: "software"
+   
