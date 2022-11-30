@@ -3,3 +3,5 @@ codeServer.egg-info
 .eggs
 __pycache__
 .open
+database.db
+log.txt

@@ -1,17 +1,17 @@
-"""Tests for flask"""
+"""Tests for flask server"""
 
 import unittest
-from ..main import flaskServer
+from main import flask_server
 
 
 class TestFlask(unittest.TestCase):
     """
-        Unit test for flaskServer.py
+        Unit test for flask_server.py
     """
 
     def setUp(self):
-        flaskServer.app.testing = True
-        self.app = flaskServer.app.test_client()
+        flask_server.app.testing = True
+        self.app = flask_server.app.test_client()
 
     def test_response(self):
         rv = self.app.post('/run_code', data=dict(

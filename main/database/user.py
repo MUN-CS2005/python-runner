@@ -13,8 +13,8 @@ class User:
         self.code = code
 
     @classmethod
-    def _create_table(cls) -> None:
-        """Private method for setup and testing"""
+    def create_table(cls) -> None:
+        """Method for setup and testing"""
         cur = cls.con.cursor()
         cur.execute("""CREATE TABLE IF NOT EXISTS user
             (username VARCHAR(255) PRIMARY KEY, 
@@ -82,6 +82,19 @@ class User:
         if not result:
             return False
         return True
+
+    @classmethod
+    def fetch_all(cls):
+        """
+        Returns iterator of every user found in database
+        """
+        cur = cls.con.cursor()
+        result = cur.execute("SELECT * from user;", cur.fetchall())
+        if not result:
+            cur.close()
+            raise KeyError("No users in database")
+        iterator = iter(result)
+        return iterator
 
     @classmethod
     def _del_table(cls) -> None:
