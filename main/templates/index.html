@@ -50,7 +50,7 @@
             gap: 1rem;
         }
         form button {
-            font-size: 1.4rem;
+            font-size: 1rem;
             padding: 0.2rem 1rem;
             border: none;
             border-radius: 2rem;
@@ -59,36 +59,196 @@
             transition: all 0.3s;
         }
         form button:hover {
-            padding: 0.4rem 1.6rem;
+            padding: 0.2rem 1.6rem;
             color: #222831;
             background-color: #00ADB5;
-            transition: all 0.3s;
+            transition: ease-out 0.3s;
         }
         #output {
             color: #EEEEEE;
         }
-        #logout {
+        #logout_btn {
             position: fixed;
             font-size: 1rem;
             z-index: 20;
             right: 30px;
             top: 10px;
             display: block;
+            text-decoration: none;
+            transition: all 0.3s;
         }
+        #logout_btn:hover {
+            font-size: 1rem;
+            transition: all 0.3s;
+            color: #EEEEEE;
+        }
+        #page {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .external {
+            box-shadow: 5px 5px 20px 1px rgba(0,0,0,0.55);
+        }
+        .error {
+            border: 1px solid red;
+            border-radius: 5px;
+            color: red;
+            padding: 10px;
+        }
+        .success {
+            border: 1px solid red;
+            border-radius: 5px;
+            color: #12b886;
+            padding: 10px;
+        }
+        .success2 {
+            border: 1px solid red;
+            border-radius: 5px;
+            color: #12b886;
+            padding: 10px;
+        }
+        ::-webkit-scrollbar {
+        width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+        background: #888;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        }
+        {% if admin %}
+        body {
+            display: grid;
+            grid-template-columns: 20% 80%;
+        }
+        #users {
+            background-color: #33bdc4;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: scroll;
+        }
+        #users div {
+            overflow: visible;
+            background-color: #222831;
+            width: 100%;
+            border-radius: 1.4rem;
+
+        }
+        #users form {
+            font-size: 1.2rem;
+            height: 20vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        #users input {
+            display: none;
+        }
+        #delete:hover {
+            padding: 0.2rem 1.6rem;
+            color: #222831;
+            background-color: #e03131;
+            transition: ease-out 0.3s;
+        }
+        #internal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+            gap: 1rem;
+            background-color: #222831;
+        }
+        #create {
+            overflow: visible;
+            display: flex;
+            background-color: #222831;
+            width: 100%;
+            border-radius: 1.4rem;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+        }
+        #create form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        #create input {
+            display: initial;
+        }
+        #create button:hover {
+            padding: 0.2rem 1.6rem;
+            color: #222831;
+            background-color: #12b886;
+            transition: ease-out 0.3s;
+        }
+        {% endif %}
     </style>
 </head>
 
 <body>
-    <section>
-        <form method="post">
-            <button formaction="/logout" id="logout">Logout</button>
+    {% if admin %}
+    <section id="users">
+        {% if error_username_taken %}
+            <div class="error">
+            Username already taken...
+            </div>
+        {% endif %}
+        {% if error_no_credentials %}
+            <div class="error">
+            Please input credentials...
+            </div>
+        {% endif %}
+        {% if success %}
+            <div class="success">
+            Account created w/ success!
+            </div>
+        {% endif %}
+        {% if success_deleted %}
+            <div class="success2">
+            Account deleted w/ success!
+            </div>
+        {% endif %}
+        <div id="create">
+            <form method="POST">
+                <input name="username" placeholder="Username" required>
+                <input name="password" placeholder="Password" required>
+                <button formaction = "/create" type="submit" >Create Account</button>
+            </form>
+        </div>
+        {% for user in users %}
+            <div class="external">
+                <form method="POST">
+                    <h3>{{user[0]}}</h3>
+                    <input name="username" placeholder="Username" value="{{user[0]}}" required>
+                    <div id="internal">
+                        <button formaction = "/admin" type="submit" >View</button>
+                        <button id="delete" formaction = "/delete" type="submit" >Delete</button>
+                    </div>
+                </form>
+            </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+    <section id="main">
+        <form method="POST">
+            <button id="logout_btn" formaction = "/logout" type="submit">Logout</button>
         </form>
-        <div>
+        <div id="page">
             <div id="intro">
                 <label>Welcome, {{ username }}</label>
                 <h1>Python Online Quiz</h1>
             </div>
-            <br>
             <form method="POST" id="runform">
                 <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
                 <div id="btns">
