@@ -123,6 +123,7 @@
         ::-webkit-scrollbar-thumb:hover {
         background: #555;
         }
+
         {% if admin %}
         body {
             display: grid;
@@ -293,7 +294,19 @@
                 </div>
             </form>
             <div id="output">
+                {% if output %}
+                <div>
+                    Output:
+                </div>
+                {% endif %}
                 <pre>{{ output }}</pre>
+                {% if pylint %}
+                <br>
+                <div>
+                    Pylint:
+                </div>
+                {% endif %}
+                <pre>{{ pylint }}</pre>
             </div>
         </div>
     </section>

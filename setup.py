@@ -7,7 +7,7 @@ setup(
     description='A small coding based web application',
     author='Team C',
     packages=find_packages(include=['main', 'main.*']),
-    install_requires=['Flask'],
+    install_requires=['Flask', 'pylint'],
     package_data={
         '': ['*.txt', '*.pdf']},
 )
