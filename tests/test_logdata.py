@@ -2,7 +2,7 @@
 
 import unittest
 import os
-from ..main import LogData
+from main import LogData
 
 
 class TestLogData(unittest.TestCase):

@@ -50,7 +50,7 @@
             gap: 1rem;
         }
         form button {
-            font-size: 1.4rem;
+            font-size: 1rem;
             padding: 0.2rem 1rem;
             border: none;
             border-radius: 2rem;
@@ -59,15 +59,15 @@
             transition: all 0.3s;
         }
         form button:hover {
-            padding: 0.4rem 1.6rem;
+            padding: 0.2rem 1.6rem;
             color: #222831;
             background-color: #00ADB5;
-            transition: all 0.3s;
+            transition: ease-out 0.3s;
         }
         #output {
             color: #EEEEEE;
         }
-        #logout {
+        #logout_btn {
             position: fixed;
             font-size: 1rem;
             z-index: 20;
@@ -196,12 +196,55 @@
     </style>
 </head>
 
-<body>
-    <section>
-        <form method="post">
-            <button formaction="/logout" id="logout">Logout</button>
+<body onload="main()">
+    {% if admin %}
+    <section id="users">
+        {% if error_username_taken %}
+            <div class="error">
+            Username already taken...
+            </div>
+        {% endif %}
+        {% if error_no_credentials %}
+            <div class="error">
+            Please input credentials...
+            </div>
+        {% endif %}
+        {% if success %}
+            <div class="success">
+            Account created w/ success!
+            </div>
+        {% endif %}
+        {% if success_deleted %}
+            <div class="success2">
+            Account deleted w/ success!
+            </div>
+        {% endif %}
+        <div id="create">
+            <form method="POST">
+                <input name="username" placeholder="Username" required>
+                <input name="password" placeholder="Password" required>
+                <button formaction = "/create" type="submit" >Create Account</button>
+            </form>
+        </div>
+        {% for user in users %}
+            <div class="external">
+                <form method="POST">
+                    <h3>{{user[0]}}</h3>
+                    <input name="username" placeholder="Username" value="{{user[0]}}" required>
+                    <div id="internal">
+                        <button formaction = "/admin" type="submit" >View</button>
+                        <button id="delete" formaction = "/delete" type="submit" >Delete</button>
+                    </div>
+                </form>
+            </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+    <section id="main">
+        <form method="POST">
+            <button id="logout_btn" formaction = "/logout" type="submit">Logout</button>
         </form>
-        <div>
+        <div id="page">
             <div id="intro">
                 <label>Welcome, {{ username }}</label>
                 <!--Timing script-->
@@ -241,7 +284,6 @@
                 <!--End of Timing script-->
                 <h1>Python Online Quiz</h1>
             </div>
-            <br>
             <form method="POST" id="runform" enctype="multipart/form-data">
                 <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
                 <div id="btns">
@@ -258,6 +300,5 @@
             </div>
         </div>
     </section>
-
 </body>
 </html>
