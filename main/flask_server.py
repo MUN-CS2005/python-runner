@@ -11,12 +11,16 @@ from subprocess import PIPE, STDOUT, run
 from flask import Flask, render_template, request, redirect, url_for, session
 from main.database.user import User
 from main.LogData import LogData
+from main.TimingSystem import TimingSys
+
 
 app = Flask(__name__)
 app.secret_key = "testing"
 
 LOGFILE = "log.txt"
 logger = LogData.Logdata(LOGFILE)
+UserTiming = {}  # username-timing dic
+TimeLimit = 600  # time limit in second config
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -29,7 +33,13 @@ def home():
         user = User.get(username)
         session['code'] = user.code
         logger.record_log("home()", str(user.username), str(session['code']))
-        return render_template("index.html", code=user.code, username=username)
+        # timelimit check
+        time_limit = TimeLimit
+        if username in UserTiming:
+            time_limit = round(UserTiming[username].get_time_remaining())
+        else:
+            UserTiming[username] = TimingSys.Timing(TimeLimit)
+        return render_template("index.html", code=user.code, username=username, timelimit=time_limit)
     return redirect(url_for('login'))
 
 
