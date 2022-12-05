@@ -116,9 +116,9 @@ def run_code():
     if session.get('admin'):
         users = User.fetch_all()
         return render_template("index.html", code=code, output=python_output, pylint=pylint_output,
-                               username=session.get('username'), admin=True, users=users)
+                               username=session.get('username'), admin=True, users=users, light=session.get('light'))
     return render_template("index.html", code=code, output=python_output, pylint=pylint_output,
-                           username=session.get('username'))
+                           username=session.get('username'), light=session.get('light'))
 
 
 @app.route("/save_code", methods=['POST'])
@@ -139,8 +139,8 @@ def save_code():
     if session.get('admin'):
         users = User.fetch_all()
         return render_template("index.html", code=code, username=session.get('username'),
-                               admin=True, users=users)
-    return render_template("index.html", code=code, username=session.get('username'))
+                               admin=True, users=users, light=session.get('light'))
+    return render_template("index.html", code=code, username=session.get('username'), light=session.get('light'))
 
 
 @app.route("/load_code", methods=['POST'])
@@ -162,8 +162,8 @@ def load_code():
     if session.get('admin'):
         users = User.fetch_all()
         return render_template("index.html", code=code, username=session.get('username'),
-                               admin=True, users=users)
-    return render_template("index.html", code=code, username=session.get('username'))
+                               admin=True, users=users, light=session.get('light'))
+    return render_template("index.html", code=code, username=session.get('username'), light=session.get('light'))
 
 
 @app.route("/login", methods=['POST', 'GET'])
@@ -208,6 +208,19 @@ def logout():
     """Route for logging out a user"""
     session.clear()
     return redirect(url_for('login'))
+
+
+@app.route("/theme", methods=['POST'])
+def change_theme():
+    username = session.get('username')
+    if username:
+        user = User.get(username)
+        code = user.code
+    if session.get('light') is None:
+        session['light'] = True
+    else:
+        session['light'] = not session['light']
+    return render_template("index.html", code=code, username=session.get('username'), light=session['light'])
 
 
 if __name__ == "__main__":
