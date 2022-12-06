@@ -284,12 +284,15 @@
                 <!--End of Timing script-->
                 <h1>Python Online Quiz</h1>
             </div>
-            <form method="POST" id="runform">
+            <form method="POST" id="runform" enctype="multipart/form-data">
                 <textarea name="codestuff" id="coding" rows="25" cols="80">{{ code }}</textarea>
                 <div id="btns">
                     <button formaction = "/run_code" type="submit" id="run">Run</button>
                     <button formaction = "/save_code" type="submit" id="save">Save</button>
                     <button formaction = "/load_code" type="submit" >Load</button>
+                    <input type="file" name="filename">
+                    <button formaction = "/upload" type="submit" >Upload</button>
+                    <button formaction = "/download" type="submit" >Download</button>
                 </div>
             </form>
             <div id="output">
@@ -297,6 +300,5 @@
             </div>
         </div>
     </section>
-
 </body>
 </html>

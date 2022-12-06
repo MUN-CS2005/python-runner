@@ -7,8 +7,9 @@ Libraries used:
 By Kevin Tanaka(kytanaka - 202049565)
 Date: Nov, 2022
 """
+import os
 from subprocess import PIPE, STDOUT, run
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from main.database.user import User
 from main.LogData import LogData
 from main.TimingSystem import TimingSys
@@ -172,6 +173,35 @@ def load_code():
         return render_template("index.html", code=code, username=session.get('username'),
                                admin=True, users=users)
     return render_template("index.html", code=code, username=session.get('username'))
+
+
+@app.route("/upload", methods=['POST'])
+def upload():
+    """
+    uploads the selected file.
+    the contents of the file are returned
+    to the code area
+    """
+    file = request.files["filename"]
+    code = file.read()
+    code = code.decode("utf-8")
+    return render_template("index.html", code=code)
+
+
+@app.route("/download", methods=['POST'])
+def download():
+    """
+    downloads the current content of the code space
+    as a python file. the file that is downloaded
+    is maintained in the project
+    """
+    code = request.form["codestuff"]
+    print(code)
+
+    with open("download.py", "w") as file:
+        file.write(code)
+        path = "download.py"
+        return send_file(path, as_attachment=True)
 
 
 @app.route("/login", methods=['POST', 'GET'])
