@@ -190,6 +190,10 @@ def upload():
     file = request.files["filename"]
     code = file.read()
     code = code.decode("utf-8")
+    if session.get('admin'):
+        users = User.fetch_all()
+        return render_template("index.html", code=code, username=session.get('username'),
+                               admin=True, users=users, light=session.get('light'))
     return render_template("index.html", code=code)
 
 
@@ -266,6 +270,10 @@ def change_theme():
         session['light'] = True
     else:
         session['light'] = not session['light']
+    if session.get('admin'):
+        users = User.fetch_all()
+        return render_template("index.html", code=code, username=session.get('username'),
+                               admin=True, users=users, light=session.get('light'))
     return render_template("index.html", code=code, username=session.get('username'),
                            light=session['light'], admin=session.get('admin'))
 
