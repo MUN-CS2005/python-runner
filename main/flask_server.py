@@ -205,8 +205,8 @@ def download():
 
     with open("download.py", "w") as file:
         file.write(code)
-        path = "download.py"
-        return send_file(path, as_attachment=True)
+    path = "download.py"
+    return send_file(path, as_attachment=True)
 
 
 @app.route("/login", methods=['POST', 'GET'])
