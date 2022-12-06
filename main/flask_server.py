@@ -106,8 +106,8 @@ def run_code():
     code = request.form['codestuff']
     python_output = run("python", stdout=PIPE, shell=True, stderr=STDOUT,
                         input=code, encoding='ascii', check=False).stdout
-    pylint_output = run("pylint --from-stdin online_code_runner", stdout=PIPE, shell=True, stderr=STDOUT,
-                        input=code, encoding='UTF-8', check=False).stdout
+    pylint_output = run("pylint --from-stdin online_code_runner", stdout=PIPE, shell=True,
+                        stderr=STDOUT, input=code, encoding='UTF-8', check=False).stdout
     try:
         logger.record_log("runcode()", session.get('username'))
     except TypeError:
@@ -116,7 +116,8 @@ def run_code():
     if session.get('admin'):
         users = User.fetch_all()
         return render_template("index.html", code=code, output=python_output, pylint=pylint_output,
-                               username=session.get('username'), admin=True, users=users, light=session.get('light'))
+                               username=session.get('username'), admin=True,
+                               users=users, light=session.get('light'))
     return render_template("index.html", code=code, output=python_output, pylint=pylint_output,
                            username=session.get('username'), light=session.get('light'))
 
@@ -140,7 +141,8 @@ def save_code():
         users = User.fetch_all()
         return render_template("index.html", code=code, username=session.get('username'),
                                admin=True, users=users, light=session.get('light'))
-    return render_template("index.html", code=code, username=session.get('username'), light=session.get('light'))
+    return render_template("index.html", code=code, username=session.get('username'),
+                           light=session.get('light'))
 
 
 @app.route("/load_code", methods=['POST'])
@@ -163,7 +165,8 @@ def load_code():
         users = User.fetch_all()
         return render_template("index.html", code=code, username=session.get('username'),
                                admin=True, users=users, light=session.get('light'))
-    return render_template("index.html", code=code, username=session.get('username'), light=session.get('light'))
+    return render_template("index.html", code=code, username=session.get('username'),
+                           light=session.get('light'))
 
 
 @app.route("/login", methods=['POST', 'GET'])
@@ -212,6 +215,7 @@ def logout():
 
 @app.route("/theme", methods=['POST'])
 def change_theme():
+    """Route for changing the theme"""
     username = session.get('username')
     if username:
         user = User.get(username)
@@ -220,7 +224,8 @@ def change_theme():
         session['light'] = True
     else:
         session['light'] = not session['light']
-    return render_template("index.html", code=code, username=session.get('username'), light=session['light'])
+    return render_template("index.html", code=code, username=session.get('username'),
+                           light=session['light'])
 
 
 if __name__ == "__main__":
