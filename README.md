@@ -15,6 +15,19 @@
 - previous tasks were updated upon request of new features 
 - intial due date for Cycle is Novemeber 19th with updates based on code review due 10 PM Novemeber 20th
 
+   ## C Team Submission 7
+- The admin page can create new users and view all users found on the database
+- The admin page can be accssed with Username: admin Password: software
+- The upload can take any kind of file but works best with .py or .txt
+- The download will download files as .py files
+- The timing system adds a default 10 minute timer that can be edited within the timing module
+- Displays pylint to the user on the webpage
+- Code review was acomplished by reviewing each pull request
+- The team meeting notes can be found on the kanban board under "Meeting minutes 5" and "Meeting minutes 6" respectively.
+- The performance review for cycle 7 is a part of "Meeting minutes 6" on the kanban board. reviewing the work that was done
+- previous tasks were updated upon request of new features
+- intial due date for Cycle is Decemebr 4th with review of pull requests at 9 PM December 5th
+
 ## Installation
 
 To set up "codeServer" it is recommended to have a virtual environment

@@ -12,12 +12,16 @@ from subprocess import PIPE, STDOUT, run
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from main.database.user import User
 from main.LogData import LogData
+from main.TimingSystem import TimingSys
+
 
 app = Flask(__name__)
 app.secret_key = "testing"
 
 LOGFILE = "log.txt"
 logger = LogData.Logdata(LOGFILE)
+UserTiming = {}  # username-timing dic
+TimeLimit = 600  # time limit in second config
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -30,7 +34,13 @@ def home():
         user = User.get(username)
         session['code'] = user.code
         logger.record_log("home()", str(user.username), str(session['code']))
-        return render_template("index.html", code=user.code, username=username)
+        # timelimit check
+        time_limit = TimeLimit
+        if username in UserTiming:
+            time_limit = round(UserTiming[username].get_time_remaining())
+        else:
+            UserTiming[username] = TimingSys.Timing(TimeLimit)
+        return render_template("index.html", code=user.code, username=username, timelimit=time_limit)
     return redirect(url_for('login'))
 
 
@@ -105,19 +115,22 @@ def remove():
 def run_code():
     """Routing the "/run_code" page"""
     code = request.form['codestuff']
-    python_result = run("python", stdout=PIPE, shell=True, stderr=STDOUT,
-                        input=code, encoding='ascii', check=False)
-    output = python_result.stdout
+    python_output = run("python", stdout=PIPE, shell=True, stderr=STDOUT,
+                        input=code, encoding='ascii', check=False).stdout
+    pylint_output = run("pylint --from-stdin online_code_runner", stdout=PIPE, shell=True,
+                        stderr=STDOUT, input=code, encoding='UTF-8', check=False).stdout
     try:
         logger.record_log("runcode()", session.get('username'))
     except TypeError:
-        return render_template("index.html", code=code, output=output,
+        return render_template("index.html", code=code, output=python_output, pylint=pylint_output,
                                username=session.get('username'))
     if session.get('admin'):
         users = User.fetch_all()
-        return render_template("index.html", code=code, output=output,
-                               username=session.get('username'), admin=True, users=users)
-    return render_template("index.html", code=code, output=output, username=session.get('username'))
+        return render_template("index.html", code=code, output=python_output, pylint=pylint_output,
+                               username=session.get('username'), admin=True,
+                               users=users, light=session.get('light'))
+    return render_template("index.html", code=code, output=python_output, pylint=pylint_output,
+                           username=session.get('username'), light=session.get('light'))
 
 
 @app.route("/save_code", methods=['POST'])
@@ -138,8 +151,9 @@ def save_code():
     if session.get('admin'):
         users = User.fetch_all()
         return render_template("index.html", code=code, username=session.get('username'),
-                               admin=True, users=users)
-    return render_template("index.html", code=code, username=session.get('username'))
+                               admin=True, users=users, light=session.get('light'))
+    return render_template("index.html", code=code, username=session.get('username'),
+                           light=session.get('light'))
 
 
 @app.route("/load_code", methods=['POST'])
@@ -161,8 +175,9 @@ def load_code():
     if session.get('admin'):
         users = User.fetch_all()
         return render_template("index.html", code=code, username=session.get('username'),
-                               admin=True, users=users)
-    return render_template("index.html", code=code, username=session.get('username'))
+                               admin=True, users=users, light=session.get('light'))
+    return render_template("index.html", code=code, username=session.get('username'),
+                           light=session.get('light'))
 
 
 @app.route("/upload", methods=['POST'])
@@ -236,6 +251,21 @@ def logout():
     """Route for logging out a user"""
     session.clear()
     return redirect(url_for('login'))
+
+
+@app.route("/theme", methods=['POST'])
+def change_theme():
+    """Route for changing the theme"""
+    username = session.get('username')
+    if username:
+        user = User.get(username)
+        code = user.code
+    if session.get('light') is None:
+        session['light'] = True
+    else:
+        session['light'] = not session['light']
+    return render_template("index.html", code=code, username=session.get('username'),
+                           light=session['light'])
 
 
 if __name__ == "__main__":

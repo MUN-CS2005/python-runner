@@ -3,12 +3,14 @@ import time
 A solution for TimingSystem.
 Library used:
     time
-
-Currently This module does not work properly, as a backend module, it does not communicate with frontend webpage.
-A solution to build communication between webpage time record script and backend python class instance is requied.
+    
+This module can provide a solution for timing and record the duration for each student.
 
 Author: Ruixiao Lu
 Date: Nov. 2022
+
+Update History: Dec.4 2022 - Added get_time_remaining() function.
+                Nov 2022 - initial commit.
 """
 
 
@@ -54,6 +56,15 @@ class Timing:
             return time.time() - self.start
         else:
             return self.duration
+
+    def get_time_remaining(self):
+        """
+        :return: The time remaining.
+        """
+        if not self.status:
+            return self.timelimit - (time.time() - self.start)
+        else:
+            return 0
 
     def check_time_exceed(self):
         """

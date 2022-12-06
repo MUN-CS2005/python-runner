@@ -14,18 +14,30 @@
         * {
             margin: 0;
             padding: 0;
+            {% if light %}
+            color: #105d61;
+            {% else %}
             color: #33bdc4;
+            {% endif %}
             overflow-x: hidden;
         }
         section {
             padding: 2rem;
             height: 100vh;
+            {% if light %}
+            background-color: #dbdbdb;
+            {% else %}
             background-color: #222831;
+            {% endif %}
             display: flex;
             flex-direction: column;
             gap: 2rem;
             align-items: center;
+            {% if light %}
+            color: #ffffff;
+            {% else %}
             color: #96DB80;
+            {% endif %}
         }
         #intro {
             display: flex;
@@ -33,9 +45,13 @@
             gap: 0.6rem;
         }
         #coding {
-            border: none;
+            border: 2px solid #393E46;
             border-radius: 1rem;
+            {% if light %}
+            background-color: transparent;
+            {% else %}
             background-color: #393E46;
+            {% endif %}
             padding: 1rem;
             outline: none;
         }
@@ -67,17 +83,14 @@
         #output {
             color: #EEEEEE;
         }
-        #logout_btn {
-            position: fixed;
+        #logout_btn, #switch_theme_btn {
             font-size: 1rem;
             z-index: 20;
-            right: 30px;
-            top: 10px;
             display: block;
             text-decoration: none;
             transition: all 0.3s;
         }
-        #logout_btn:hover {
+        #logout_btn:hover, #switch_theme_btn:hover {
             font-size: 1rem;
             transition: all 0.3s;
             color: #EEEEEE;
@@ -123,6 +136,7 @@
         ::-webkit-scrollbar-thumb:hover {
         background: #555;
         }
+
         {% if admin %}
         body {
             display: grid;
@@ -193,6 +207,13 @@
             transition: ease-out 0.3s;
         }
         {% endif %}
+        .header {
+            width: 100%;
+            padding: 0px 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: right;
+        }
     </style>
 </head>
 
@@ -241,8 +262,9 @@
     </section>
     {% endif %}
     <section id="main">
-        <form method="POST">
+        <form method="POST" class="header">
             <button id="logout_btn" formaction = "/logout" type="submit">Logout</button>
+            <button id="switch_theme_btn" formaction = "/theme" type="submit">Switch Theme</button>
         </form>
         <div id="page">
             <div id="intro">
@@ -250,7 +272,7 @@
                 <!--Timing script-->
                 <p style="color:red;" id="TimeRemaining"></p>
                   <script>
-                  let SECOND = 600;   // quiz duration in seconds, currently hard coded.
+                  let SECOND = {{ timelimit }};   // quiz duration in seconds, currently hard coded.
                 var a;
                 var timeVar;
                 let status=0;
@@ -296,7 +318,19 @@
                 </div>
             </form>
             <div id="output">
+                {% if output %}
+                <div>
+                    Output:
+                </div>
+                {% endif %}
                 <pre>{{ output }}</pre>
+                {% if pylint %}
+                <br>
+                <div>
+                    Pylint:
+                </div>
+                {% endif %}
+                <pre>{{ pylint }}</pre>
             </div>
         </div>
     </section>
