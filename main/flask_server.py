@@ -242,8 +242,8 @@ def admin():
         code_user = user.code
         session['username'] = user.username
         return render_template("index.html", users=users, code=code_user, admin=True,
-                               username=user.username)
-    return render_template("index.html", users=users, admin=True)
+                               username=user.username, light=session.get('light'))
+    return render_template("index.html", users=users, admin=True, light=session.get('light'))
 
 
 @app.route("/logout", methods=['POST'])
@@ -260,12 +260,14 @@ def change_theme():
     if username:
         user = User.get(username)
         code = user.code
+    else:
+        code = ""
     if session.get('light') is None:
         session['light'] = True
     else:
         session['light'] = not session['light']
     return render_template("index.html", code=code, username=session.get('username'),
-                           light=session['light'])
+                           light=session['light'], admin=session.get('admin'))
 
 
 if __name__ == "__main__":
